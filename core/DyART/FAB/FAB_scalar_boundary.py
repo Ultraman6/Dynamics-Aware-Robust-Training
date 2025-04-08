@@ -449,29 +449,7 @@ class FABAttack_scalar(Attack, LabelMixin):
             counter_iter = 0
             while counter_iter < self.n_iter:
                 df, dg = self.get_func_value_grads_batch(x=x1,y=la2,model=model,func=func,**kwargs_func)
-                with torch.no_grad():       
-                    
-                    ### old
-#                     if self.norm == 'Linf':
-#                         dist1 = df.abs() / (1e-12 +
-#                                             dg.abs()
-#                                             .view(dg.shape[0], dg.shape[1], -1)
-#                                             .sum(dim=-1))
-#                     elif self.norm == 'L2':
-#                         dist1 = df.abs() / (1e-12 + (dg ** 2)
-#                                             .view(dg.shape[0], dg.shape[1], -1)
-#                                             .sum(dim=-1).sqrt())
-#                     elif self.norm == 'L1':
-#                         dist1 = df.abs() / (1e-12 + dg.abs().reshape(
-#                             [df.shape[0], df.shape[1], -1]).max(dim=2)[0])
-#                     else:
-#                         raise ValueError('norm not supported')
-#                     ind = dist1.min(dim=1)[1]
-#                     dg2 = dg[u1, ind]
-#                     b = (- df[u1, ind] +
-#                          (dg2 * x1).view(x1.shape[0], -1).sum(dim=-1))
-#                     w = dg2.reshape([bs, -1])
-                    ### old
+                with torch.no_grad():
 
                     b = (- df +
                          (dg * x1).view(x1.shape[0], -1).sum(dim=-1))
